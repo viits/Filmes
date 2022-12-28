@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 var ConnectionString = builder.Configuration.GetConnectionString("FilmeConnection");
 builder.Services.AddDbContext<FilmeContext>(opts => 
-    opts.UseMySql(ConnectionString, ServerVersion.AutoDetect(ConnectionString)));
+    opts.UseLazyLoadingProxies().UseMySql(ConnectionString, ServerVersion.AutoDetect(ConnectionString)));
 builder.Services.AddControllers().AddNewtonsoftJson();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
