@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations;
 
 namespace FilmesApi.Models;
 
@@ -11,5 +12,8 @@ public class Cinema
     public string Nome { get; set; }
     public virtual Endereco Endereco { get; set; }
     public int EnderecoId { get; set; }
-    public int GerenteFK { get; set; }
+    public virtual Gerente Gerente { get; set; }
+    public int GerenteId   { get; set; }
+    [JsonIgnore]
+    public virtual List<Sessao> Sessoes { get; set; }
 }

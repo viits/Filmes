@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using FilmesApi.Data;
-using FilmesApi.Data.Dtos.Filme;
+using FilmesApi.Data.Dtos;
 using FilmesApi.Models;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -10,7 +10,7 @@ namespace FilmesApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class FilmeController : Controller
+    public class FilmeController : ControllerBase
     {
         private FilmeContext _context;
         private IMapper _mapper;
@@ -31,9 +31,24 @@ namespace FilmesApi.Controllers
         }
         
         [HttpGet]
-        public IEnumerable<ReadFilmeDto> RecuperaFilmes([FromQuery] int skip = 0, [FromQuery] int take = 2) {
-            return _mapper.Map<List<ReadFilmeDto>>(_context.Filmes.Skip(skip).Take(take));
+        public IActionResult RecuperaFilmes([FromQuery] int? classificacao = null)
+        {   
+            if(classificacao == null)
+            {
+               return Ok(_mapper.Map<List<ReadFilmeDto>>(_context.Filmes));
+            }
+            
+            List<Filme> filmes = _context.Filmes.Where(filme=> filme.ClassificacaoEtaria <= classificacao).ToList();
+            if(filmes != null)
+            {
+                List<ReadFilmeDto> readDto = _mapper.Map<List<ReadFilmeDto>>(filmes);
+                return Ok(readDto);
+            }
+            return NotFound();
         }
+        //public IEnumerable<ReadFilmeDto> RecuperaFilmes([FromQuery] int skip = 0, [FromQuery] int take = 2) {
+          //  return _mapper.Map<List<ReadFilmeDto>>(_context.Filmes.Skip(skip).Take(take));
+        //}
 
         [HttpGet("{id}")]
         public IActionResult RecuperarPorId(int id) {

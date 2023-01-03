@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace FilmesApi.Data.Dtos.Filme;
+namespace FilmesApi.Data.Dtos;
 
 public class CreateFilmeDto
 {
@@ -13,4 +13,5 @@ public class CreateFilmeDto
     [Required]
     [Range(70, 600, ErrorMessage = "A durção  deve ser entre 70 e 600 minutos")]
     public int Duracao { get; set; }
+    public int ClassificacaoEtaria { get; set; }
 }

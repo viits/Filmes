@@ -8,7 +8,7 @@ namespace FilmesApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class CinemaController : Controller
+    public class CinemaController : ControllerBase
     {
         private readonly FilmeContext _context;
         private IMapper _mapper;
@@ -28,9 +28,26 @@ namespace FilmesApi.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Cinema> RecuperaCinemas()
+        public IActionResult RecuperaCinemas([FromQuery] string? nomeDoFilme = null)
         {
-            return _context.Cinemas;
+            if(nomeDoFilme == null)
+            {
+                return Ok( _mapper.Map<List<ReadCinemaDto>>(_context.Cinemas.ToList()));
+            }
+            List<Cinema> cinemas= _context.Cinemas.ToList();
+            if(cinemas == null)
+            {
+                return NotFound();
+            }
+            if (!string.IsNullOrEmpty(nomeDoFilme))
+            {
+                IEnumerable<Cinema> listCinemas = from cinema in cinemas where cinema.Sessoes.Any(sessao => sessao.Filme.Titulo == nomeDoFilme) select cinema;
+                cinemas = listCinemas.ToList();
+            }
+            List<ReadCinemaDto> readDto = _mapper.Map<List<ReadCinemaDto>>(cinemas);
+            return Ok(readDto);
+            
+            //return _context.Cinemas;
         }
 
         [HttpGet("{id}")]
