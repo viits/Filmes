@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ThinkPad\\Documents\\Estudos\\EstudoNet\\FilmesApi\\FilmesApi\\FilmesApi.csproj": {}
+    "c:\\Users\\ThinkPad\\Documents\\Estudos\\EstudoNet\\FilmesApi\\FilmesApi\\FilmesApi.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ThinkPad\\Documents\\Estudos\\EstudoNet\\FilmesApi\\FilmesApi\\FilmesApi.csproj": {
+    "c:\\Users\\ThinkPad\\Documents\\Estudos\\EstudoNet\\FilmesApi\\FilmesApi\\FilmesApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ThinkPad\\Documents\\Estudos\\EstudoNet\\FilmesApi\\FilmesApi\\FilmesApi.csproj",
+        "projectUniqueName": "c:\\Users\\ThinkPad\\Documents\\Estudos\\EstudoNet\\FilmesApi\\FilmesApi\\FilmesApi.csproj",
         "projectName": "FilmesApi",
-        "projectPath": "C:\\Users\\ThinkPad\\Documents\\Estudos\\EstudoNet\\FilmesApi\\FilmesApi\\FilmesApi.csproj",
+        "projectPath": "c:\\Users\\ThinkPad\\Documents\\Estudos\\EstudoNet\\FilmesApi\\FilmesApi\\FilmesApi.csproj",
         "packagesPath": "C:\\Users\\ThinkPad\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ThinkPad\\Documents\\Estudos\\EstudoNet\\FilmesApi\\FilmesApi\\obj\\",
+        "outputPath": "c:\\Users\\ThinkPad\\Documents\\Estudos\\EstudoNet\\FilmesApi\\FilmesApi\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\ThinkPad\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -22,7 +22,8 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "https://api.nuget.org/v3/index.json": {}
+          "https://api.nuget.org/v3/index.json": {},
+          "https://pkgs.dev.azure.com/modalgr-csn/_packaging/modalgr-csn/nuget/v3/index.json": {}
         },
         "frameworks": {
           "net6.0": {
@@ -47,6 +48,10 @@
             "AutoMapper.Extensions.Microsoft.DependencyInjection": {
               "target": "Package",
               "version": "[12.0.0, )"
+            },
+            "FluentResults": {
+              "target": "Package",
+              "version": "[3.15.1, )"
             },
             "Microsoft.AspNetCore.Mvc.NewtonsoftJson": {
               "target": "Package",

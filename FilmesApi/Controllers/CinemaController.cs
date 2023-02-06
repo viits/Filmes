@@ -2,6 +2,8 @@
 using FilmesApi.Data;
 using FilmesApi.Data.Dtos;
 using FilmesApi.Models;
+using FilmesApi.Services;
+using FluentResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FilmesApi.Controllers
@@ -10,42 +12,27 @@ namespace FilmesApi.Controllers
     [Route("[controller]")]
     public class CinemaController : ControllerBase
     {
-        private readonly FilmeContext _context;
-        private IMapper _mapper;
+        private readonly CinemaService _service;
 
-        public CinemaController(FilmeContext context, IMapper mapper)
+        public CinemaController(CinemaService service)
         {
-            _context = context;
-            _mapper = mapper;
+            _service = service;
         }
         [HttpPost]
         public IActionResult AdicionaCinema([FromBody] CreateCinemaDto cinemaDto)
         {
-            Cinema cinema = _mapper.Map<Cinema>(cinemaDto);
-            _context.Cinemas.Add(cinema);
-            _context.SaveChanges();
-            return CreatedAtAction(nameof(RecuperaCinemasPorId), new { Id = cinema.Id }, cinema);
+          ReadCinemaDto readDto = _service.AdicionarCinema(cinemaDto);
+
+            return CreatedAtAction(nameof(RecuperaCinemasPorId), new { Id = readDto.Id }, readDto);
         }
 
         [HttpGet]
         public IActionResult RecuperaCinemas([FromQuery] string? nomeDoFilme = null)
         {
-            if(nomeDoFilme == null)
-            {
-                return Ok( _mapper.Map<List<ReadCinemaDto>>(_context.Cinemas.ToList()));
-            }
-            List<Cinema> cinemas= _context.Cinemas.ToList();
-            if(cinemas == null)
-            {
-                return NotFound();
-            }
-            if (!string.IsNullOrEmpty(nomeDoFilme))
-            {
-                IEnumerable<Cinema> listCinemas = from cinema in cinemas where cinema.Sessoes.Any(sessao => sessao.Filme.Titulo == nomeDoFilme) select cinema;
-                cinemas = listCinemas.ToList();
-            }
-            List<ReadCinemaDto> readDto = _mapper.Map<List<ReadCinemaDto>>(cinemas);
-            return Ok(readDto);
+
+            List<ReadCinemaDto> listDto = _service.RecuperaCinemas(nomeDoFilme);
+            if(listDto == null) return NotFound();
+            return Ok(listDto);
             
             //return _context.Cinemas;
         }
@@ -53,40 +40,29 @@ namespace FilmesApi.Controllers
         [HttpGet("{id}")]
         public IActionResult RecuperaCinemasPorId(int id)
         {
-            Cinema cinema = _context.Cinemas.FirstOrDefault(cinema => cinema.Id == id);
-            if (cinema != null)
-            {
-                ReadCinemaDto cinemaDto = _mapper.Map<ReadCinemaDto>(cinema);
-                return Ok(cinemaDto);
-            }
-            return NotFound();
+            ReadCinemaDto readDto = _service.RecuperarCinemasPorId(id);
+            if(readDto == null) return NotFound();
+            return Ok(readDto);
+     
         }
 
         [HttpPut("{id}")]
         public IActionResult AtualizaCinema(int id, [FromBody] UpdateCinemaDto cinemaDto)
         {
-            Cinema cinema = _context.Cinemas.FirstOrDefault(cinema => cinema.Id == id);
-            if (cinema == null)
-            {
-                return NotFound();
-            }
-            _mapper.Map(cinemaDto, cinema);
-            _context.SaveChanges();
+            Result resultado= _service.AtualizarCinemas(id, cinemaDto);
+            if (resultado.IsFailed) return NotFound();
             return NoContent();
+           
         }
 
 
         [HttpDelete("{id}")]
         public IActionResult DeletaCinema(int id)
         {
-            Cinema cinema = _context.Cinemas.FirstOrDefault(cinema => cinema.Id == id);
-            if (cinema == null)
-            {
-                return NotFound();
-            }
-            _context.Remove(cinema);
-            _context.SaveChanges();
+            Result resultado = _service.DeleteCinema(id);
+            if (resultado.IsFailed) return NotFound();
             return NoContent();
+            
         }
 
     }
