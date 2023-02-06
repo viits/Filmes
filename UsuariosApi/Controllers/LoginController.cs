@@ -19,8 +19,8 @@ namespace UsuariosApi.Controllers
         {
             Task<Result> result = _service.LogaUsuario(request);
             if (result.Result.IsFailed) return Unauthorized(result.Result.Errors);
-            return Ok(result.Result.Successes);
+            return Ok(result.Result.Reasons);
         }
-
+        
     }
 }

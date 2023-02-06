@@ -13,12 +13,14 @@ builder.Services.AddDbContext<UserDbContext>(options =>
     options.UseMySql(ConnectionString, ServerVersion.AutoDetect(ConnectionString))
 );
 
-builder.Services.AddIdentity<IdentityUser<int>, IdentityRole<int>>().AddEntityFrameworkStores<UserDbContext>();
+builder.Services.AddIdentity<IdentityUser<int>, IdentityRole<int>>(
+    opt => opt.SignIn.RequireConfirmedEmail = true
+).AddEntityFrameworkStores<UserDbContext>().AddDefaultTokenProviders();
 
 builder.Services.AddScoped<UsuarioService, UsuarioService>();
-builder.Services.AddScoped<LoginService,LoginService>();
-builder.Services.AddScoped<TokenService,TokenService>();
-builder.Services.AddScoped<LogoutService,LogoutService>();
+builder.Services.AddScoped<LoginService, LoginService>();
+builder.Services.AddScoped<TokenService, TokenService>();
+builder.Services.AddScoped<LogoutService, LogoutService>();
 
 // Add services to the container.
 builder.Services.AddControllers();
