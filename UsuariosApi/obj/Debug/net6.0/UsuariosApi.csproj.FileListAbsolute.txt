@@ -51,3 +51,6 @@ C:\Users\ThinkPad\Documents\Estudos\EstudoNet\FilmesApi\UsuariosApi\bin\Debug\ne
 C:\Users\ThinkPad\Documents\Estudos\EstudoNet\FilmesApi\UsuariosApi\bin\Debug\net6.0\Microsoft.IdentityModel.Logging.dll
 C:\Users\ThinkPad\Documents\Estudos\EstudoNet\FilmesApi\UsuariosApi\bin\Debug\net6.0\Microsoft.IdentityModel.Tokens.dll
 C:\Users\ThinkPad\Documents\Estudos\EstudoNet\FilmesApi\UsuariosApi\bin\Debug\net6.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\ThinkPad\Documents\Estudos\EstudoNet\FilmesApi\UsuariosApi\bin\Debug\net6.0\MailKit.dll
+C:\Users\ThinkPad\Documents\Estudos\EstudoNet\FilmesApi\UsuariosApi\bin\Debug\net6.0\MimeKit.dll
+C:\Users\ThinkPad\Documents\Estudos\EstudoNet\FilmesApi\UsuariosApi\bin\Debug\net6.0\BouncyCastle.Crypto.dll

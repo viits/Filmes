@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\ThinkPad\\Documents\\Estudos\\EstudoNet\\FilmesApi\\FilmesApi\\FilmesApi.csproj": {}
+    "C:\\Users\\ThinkPad\\Documents\\Estudos\\EstudoNet\\FilmesApi\\FilmesApi\\FilmesApi.csproj": {}
   },
   "projects": {
-    "c:\\Users\\ThinkPad\\Documents\\Estudos\\EstudoNet\\FilmesApi\\FilmesApi\\FilmesApi.csproj": {
+    "C:\\Users\\ThinkPad\\Documents\\Estudos\\EstudoNet\\FilmesApi\\FilmesApi\\FilmesApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\ThinkPad\\Documents\\Estudos\\EstudoNet\\FilmesApi\\FilmesApi\\FilmesApi.csproj",
+        "projectUniqueName": "C:\\Users\\ThinkPad\\Documents\\Estudos\\EstudoNet\\FilmesApi\\FilmesApi\\FilmesApi.csproj",
         "projectName": "FilmesApi",
-        "projectPath": "c:\\Users\\ThinkPad\\Documents\\Estudos\\EstudoNet\\FilmesApi\\FilmesApi\\FilmesApi.csproj",
+        "projectPath": "C:\\Users\\ThinkPad\\Documents\\Estudos\\EstudoNet\\FilmesApi\\FilmesApi\\FilmesApi.csproj",
         "packagesPath": "C:\\Users\\ThinkPad\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\ThinkPad\\Documents\\Estudos\\EstudoNet\\FilmesApi\\FilmesApi\\obj\\",
+        "outputPath": "C:\\Users\\ThinkPad\\Documents\\Estudos\\EstudoNet\\FilmesApi\\FilmesApi\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\ThinkPad\\AppData\\Roaming\\NuGet\\NuGet.Config",

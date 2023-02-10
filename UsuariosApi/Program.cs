@@ -21,6 +21,7 @@ builder.Services.AddScoped<UsuarioService, UsuarioService>();
 builder.Services.AddScoped<LoginService, LoginService>();
 builder.Services.AddScoped<TokenService, TokenService>();
 builder.Services.AddScoped<LogoutService, LogoutService>();
+builder.Services.AddScoped<EmailService, EmailService>();
 
 // Add services to the container.
 builder.Services.AddControllers();

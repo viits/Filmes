@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "kGydjWpI797xH6Y3oOVK+JifuqRvZpsTeRhyofihMHRLuV+RVYCnQ6zrGXfuD170xD6JAhIV6qQuknHtOoUYJw==",
+  "dgSpecHash": "/5yu56Wu9Xti072QV+cpTh3v3wR53nAyKutzWZIOFuaRfKLYpAWUIdGBzx/LSGqzFrn6LtVTgHDhjAYxrjAmPQ==",
   "success": true,
-  "projectFilePath": "c:\\Users\\ThinkPad\\Documents\\Estudos\\EstudoNet\\FilmesApi\\FilmesApi\\FilmesApi.csproj",
+  "projectFilePath": "C:\\Users\\ThinkPad\\Documents\\Estudos\\EstudoNet\\FilmesApi\\FilmesApi\\FilmesApi.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ThinkPad\\.nuget\\packages\\automapper\\12.0.0\\automapper.12.0.0.nupkg.sha512",
     "C:\\Users\\ThinkPad\\.nuget\\packages\\automapper.collection\\9.0.0\\automapper.collection.9.0.0.nupkg.sha512",

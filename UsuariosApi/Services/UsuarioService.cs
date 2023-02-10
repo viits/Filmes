@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Web;
+using AutoMapper;
 using FluentResults;
 using Microsoft.AspNetCore.Identity;
 using UsuariosApi.Data;
@@ -13,11 +14,13 @@ public class UsuarioService
     private UserDbContext _context;
     private IMapper _mapper;
     private UserManager<IdentityUser<int>> _userManager;
-    public UsuarioService(UserDbContext context, IMapper mapper, UserManager<IdentityUser<int>> userManager)
+    private readonly EmailService _emailService;
+    public UsuarioService(UserDbContext context, IMapper mapper, UserManager<IdentityUser<int>> userManager, EmailService emailService)
     {
         _context = context;
         _mapper = mapper;
         _userManager = userManager;
+        _emailService = emailService;
     }
 
     public Result CadastrarUsuario(CreateUsuarioDto createDto)
@@ -28,7 +31,13 @@ public class UsuarioService
         if (resultadoIdentity.Result.Succeeded)
         {
             var code = _userManager.GenerateEmailConfirmationTokenAsync(usuarioIdentity).Result;
-            Console.WriteLine("teste: " + code);
+           
+            _emailService.enviarEmail(
+                new List<IdentityUser<int>>() { usuarioIdentity },
+                "Link de Ativação",
+                usuarioIdentity.Id,
+                code
+                );
             return Result.Ok().WithSuccess(code);
         }
         return Result.Fail("Falha ao cadastrar um Usuário");
