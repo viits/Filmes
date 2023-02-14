@@ -27,20 +27,28 @@ public class UsuarioService
     {
         Usuario usuario = _mapper.Map<Usuario>(createDto);
         IdentityUser<int> usuarioIdentity = _mapper.Map<IdentityUser<int>>(usuario);
-        Task<IdentityResult> resultadoIdentity = _userManager.CreateAsync(usuarioIdentity, createDto.Password);
-        if (resultadoIdentity.Result.Succeeded)
+        try
         {
-            var code = _userManager.GenerateEmailConfirmationTokenAsync(usuarioIdentity).Result;
-           
-            _emailService.enviarEmail(
-                new List<IdentityUser<int>>() { usuarioIdentity },
-                "Link de Ativação",
-                usuarioIdentity.Id,
-                code
-                );
-            return Result.Ok().WithSuccess(code);
+            Task<IdentityResult> resultadoIdentity = _userManager.CreateAsync(usuarioIdentity, createDto.Password);
+
+            if (resultadoIdentity.Result.Succeeded)
+            {
+                var code = _userManager.GenerateEmailConfirmationTokenAsync(usuarioIdentity).Result;
+
+                _emailService.enviarEmail(
+                    new List<IdentityUser<int>>() { usuarioIdentity },
+                    "Link de Ativação",
+                    usuarioIdentity.Id,
+                    code
+                    );
+                return Result.Ok().WithSuccess(code);
+            }
+            return Result.Fail("Senha inválida");
         }
-        return Result.Fail("Falha ao cadastrar um Usuário");
+        catch (Exception e)
+        {
+            return Result.Fail("Falha ao cadastrar um Usuário");
+        }
     }
     public Result AtivaContaUsuario(AtivaContaRequest request)
     {

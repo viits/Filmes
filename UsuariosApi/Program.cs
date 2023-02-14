@@ -1,3 +1,4 @@
+using System.Text;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using UsuariosApi.Data;
@@ -8,6 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 //Conectando Banco
 var ConnectionString = builder.Configuration.GetConnectionString("UsuarioConnection");
 
+var secrety = Encoding.ASCII.GetBytes(builder.Configuration.GetValue<string>("SecretyKey"));
+// builder.ConfigureAppConfiguration((context, build) => build.AddUserSecrets<Program>());
 
 builder.Services.AddDbContext<UserDbContext>(options =>
     options.UseMySql(ConnectionString, ServerVersion.AutoDetect(ConnectionString))
@@ -30,6 +33,7 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
 
 var app = builder.Build();
 
