@@ -9,10 +9,12 @@ public class LoginService
 {
     private readonly SignInManager<IdentityUser<int>> _signInManager;
     private readonly TokenService _tokenService;
-    public LoginService(SignInManager<IdentityUser<int>> signInManager, TokenService tokenService)
+    private readonly EmailService _emailService;
+    public LoginService(SignInManager<IdentityUser<int>> signInManager, TokenService tokenService, EmailService emailService)
     {
         _signInManager = signInManager;
         _tokenService = tokenService;
+        _emailService = emailService;
     }
     public async Task<Result> LogaUsuario(LoginRequest request)
     {
@@ -21,7 +23,7 @@ public class LoginService
         if (resultadoIdentity.Succeeded)
         {
             var identityUser = _signInManager.UserManager.Users.FirstOrDefault(usuario => usuario.NormalizedUserName == request.UserName.ToUpper());
-            Token token = _tokenService.CreateToken(identityUser);
+            Token token = _tokenService.CreateToken(identityUser,_signInManager.UserManager.GetRolesAsync(identityUser).Result.FirstOrDefault());
             return Result.Ok().WithSuccess(token.Value);
         }
 
@@ -39,8 +41,12 @@ public class LoginService
 
 
         string codigoRecuperacao = _signInManager.UserManager.GeneratePasswordResetTokenAsync(identityUser).Result;
-
-        return Result.Ok().WithSuccess(codigoRecuperacao);
+        _emailService.enviarEmailResetPassword(
+            new List<IdentityUser<int>> { identityUser },
+            "Link Para resetar a Senha",
+            codigoRecuperacao
+        );
+        return Result.Ok().WithSuccess("Email enviado com sucesso!");
     }
     public Result ResetaSenha(EfetuaResetRequest request)
     {

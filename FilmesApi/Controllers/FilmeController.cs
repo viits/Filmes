@@ -4,6 +4,7 @@ using FilmesApi.Data.Dtos;
 using FilmesApi.Models;
 using FilmesApi.Services;
 using FluentResults;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
@@ -22,6 +23,7 @@ namespace FilmesApi.Controllers
         }
 
         [HttpPost]   
+        [Authorize(Roles = "admin")]
         public IActionResult AdicionarFilme([FromBody] CreateFilmeDto filmeDto) {
 
            ReadFilmeDto filme = _service.AdicionaFilme(filmeDto);

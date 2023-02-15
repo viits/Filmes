@@ -20,15 +20,15 @@ namespace UsuariosApi.Controllers
         [HttpPost]
         public IActionResult CadastroUsuario(CreateUsuarioDto createDto)
         {
-            Result resultado = _service.CadastrarUsuario(createDto);
+            Task<Result> resultado = _service.CadastrarUsuario(createDto);
            
-            if (resultado.IsFailed){
-              if(resultado.Reasons[0].Message.Equals("Senha inválida")){
-                return BadRequest(resultado.Reasons);
+            if (resultado.Result.IsFailed){
+              if(resultado.Result.Reasons.Count > 0){
+                return BadRequest(resultado.Result.Reasons);
               }
               return StatusCode(500);
             } 
-            return Ok(resultado.Reasons);
+            return Ok(resultado.Result.Reasons);
         }
         [HttpGet("/Ativa")]
         public IActionResult AtivaContaUsuario([FromQuery] AtivaContaRequest request)

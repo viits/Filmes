@@ -16,5 +16,13 @@ namespace UsuariosApi.Models
             Assunto = assunto;
             Conteudo = $"http://localhost:6000/ativa?usuarioId={usuarioId}&CodigoDeAtivacao={token}";
         }
+
+        public Mensagem(IEnumerable<IdentityUser<int>> destinatario, string assunto, string token)
+        {
+            Destinatario = new List<MailboxAddress>();
+            Destinatario.AddRange(destinatario.Select(d => new MailboxAddress(d.UserName, d.Email)));
+            Assunto = assunto;
+            Conteudo = $"Esse é o token para colocar na rota efetuar-reset-senha! \n Token: {token}";
+        }
     }
 }

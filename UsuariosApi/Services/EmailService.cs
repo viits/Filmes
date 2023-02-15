@@ -20,7 +20,13 @@ public class EmailService
         Enviar(mensagemEmail);
         return Result.Ok();
     }
-
+    public Result enviarEmailResetPassword(List<IdentityUser<int>> destinatario, string assunto, string token)
+    {
+        Mensagem mensagem = new Mensagem(destinatario, assunto, token);
+        var mensagemEmail = CriaCorpoEmail(mensagem);
+        Enviar(mensagemEmail);
+        return Result.Ok();
+    }
     private MimeMessage CriaCorpoEmail(Mensagem mensagem)
     {
         var mensagemEmail = new MimeMessage();
