@@ -1,7 +1,9 @@
 using System.Text;
+using FilmesApi.Authorization;
 using FilmesApi.Data;
 using FilmesApi.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
@@ -40,6 +42,13 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+//Add Authorization idade minima
+builder.Services.AddAuthorization(opts=>{
+    opts.AddPolicy("IdadeMinima", policy=>{
+        policy.Requirements.Add(new IdadeMinimaRequirement(18));
+    });
+});
+builder.Services.AddSingleton<IAuthorizationHandler,IdadeMinimaHandler>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -13,29 +13,24 @@ public class UsuarioService
 {
     private UserDbContext _context;
     private IMapper _mapper;
-    private UserManager<IdentityUser<int>> _userManager;
+    private UserManager<CustomIdentityUser> _userManager;
     private readonly EmailService _emailService;
-    private readonly RoleManager<IdentityRole<int>> _roleManager;
-    public UsuarioService(UserDbContext context, IMapper mapper, UserManager<IdentityUser<int>> userManager, EmailService emailService, RoleManager<IdentityRole<int>> roleManager)
+    public UsuarioService(UserDbContext context, IMapper mapper, UserManager<CustomIdentityUser> userManager, EmailService emailService)
     {
         _context = context;
         _mapper = mapper;
         _userManager = userManager;
         _emailService = emailService;
-        _roleManager = roleManager;
     }
 
     public async Task<Result> CadastrarUsuario(CreateUsuarioDto createDto)
     {
         Usuario usuario = _mapper.Map<Usuario>(createDto);
-        IdentityUser<int> usuarioIdentity = _mapper.Map<IdentityUser<int>>(usuario);
+        CustomIdentityUser usuarioIdentity = _mapper.Map<CustomIdentityUser>(usuario);
         try
         {
             IdentityResult resultadoIdentity = await _userManager.CreateAsync(usuarioIdentity, createDto.Password);
-            
-            var createRoleResult = _roleManager.CreateAsync(new IdentityRole<int>("admin")).Result;
-            var usuarioRoleResult = _userManager.AddToRoleAsync(usuarioIdentity, "admin").Result;
-
+            await _userManager.AddToRoleAsync(usuarioIdentity, "regular");
             if (resultadoIdentity.Succeeded)
             {
                 var code = _userManager.GenerateEmailConfirmationTokenAsync(usuarioIdentity).Result;

@@ -7,10 +7,10 @@ namespace UsuariosApi.Services;
 
 public class LoginService
 {
-    private readonly SignInManager<IdentityUser<int>> _signInManager;
+    private readonly SignInManager<CustomIdentityUser> _signInManager;
     private readonly TokenService _tokenService;
     private readonly EmailService _emailService;
-    public LoginService(SignInManager<IdentityUser<int>> signInManager, TokenService tokenService, EmailService emailService)
+    public LoginService(SignInManager<CustomIdentityUser> signInManager, TokenService tokenService, EmailService emailService)
     {
         _signInManager = signInManager;
         _tokenService = tokenService;
@@ -29,13 +29,13 @@ public class LoginService
 
         return Result.Fail("Usuario inválido!");
     }
-    private IdentityUser<int> ObterUsuario(string email)
+    private CustomIdentityUser ObterUsuario(string email)
     {
         return _signInManager.UserManager.Users.FirstOrDefault(user => user.NormalizedEmail == email.ToUpper());
     }
     public Result SolicitaSenha(SolicitaResetRequest request)
     {
-        IdentityUser<int> identityUser = this.ObterUsuario(request.Email);
+        CustomIdentityUser identityUser = this.ObterUsuario(request.Email);
 
         if (identityUser == null) return Result.Fail("E-mail não encontrado");
 
@@ -50,7 +50,7 @@ public class LoginService
     }
     public Result ResetaSenha(EfetuaResetRequest request)
     {
-        IdentityUser<int> identityUser = this.ObterUsuario(request.Email);
+        CustomIdentityUser identityUser = this.ObterUsuario(request.Email);
         if (identityUser == null) return Result.Fail("Email não encontrado!");
 
         IdentityResult resultado = _signInManager.UserManager.ResetPasswordAsync(identityUser, request.Token, request.Password).Result;
